@@ -1,0 +1,11 @@
+{
+  "name": "showgirlsParser",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Get pages source from a popup",
+  "browser_action": {
+    "default_icon": "css/images/Spider-128.png",
+    "default_popup": "main.html"
+  },
+  "permissions": ["tabs", "<all_urls>"]
+}
