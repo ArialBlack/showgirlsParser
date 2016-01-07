@@ -56,7 +56,8 @@ function DOMtoString(document_root) {
     if (imagesURL.length > 0 ) { 
         output = myJsonString;
         url = siteURL +  myJsonString;
-        //window.open(url,"_blank")
+        url = encodeURI(url)
+        window.open(url,"_blank")
         return url;
     } else {
         return "Нет картинок хорошего качества!";
