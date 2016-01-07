@@ -1,5 +1,6 @@
-// @author Rob W <http://stackoverflow.com/users/938089/rob-w>
-// Demo: var serialized_html = DOMtoString(document);
+var minWidth = 200,
+    minHeight = 200,
+    siteURL = "http://showgirls.dev/admin/t?get_article=";
 
 function DOMtoString(document_root) {
     var html = '',
@@ -26,16 +27,40 @@ function DOMtoString(document_root) {
         node = node.nextSibling;
     }
     
+    var myObject = new Object();
+    var imagesURL = [];
     //return html;
-    var images = [].slice.apply(document.getElementsByTagName('img'));
-    var imageURLs = images.map(function(image) {
-        if( image.clientWidth > 639 && image.clientHeight > 479) {
-            return image.src;
-        }
-    });
     
-    return images;
+    var images = [].slice.apply(document.getElementsByTagName('img'));
 
+    for (i =0; i < images.length; i++ ) {
+        if (images[i].clientWidth > minWidth && images[i].clientHeight > minHeight) {
+            console.log(images[i].src);
+            imagesURL.push(images[i].src);
+        }
+    }
+    
+    var h1s = document.getElementsByTagName('h1');
+
+    if (h1s.length > 0) {
+        myObject.title = h1s[0].innerText;
+    } else {
+        myObject.title = "Grab!";
+    }
+    
+    myObject.url = document.URL;
+    myObject.imgsrc = imagesURL;
+    
+    var myJsonString = JSON.stringify(myObject);
+
+    if (imagesURL.length > 0 ) { 
+        output = myJsonString;
+        url = siteURL +  myJsonString;
+        //window.open(url,"_blank")
+        return url;
+    } else {
+        return "Нет картинок хорошего качества!";
+    }
 }
 
 chrome.runtime.sendMessage({
